@@ -25,4 +25,4 @@ class AIPlayer(Game.Player):
         shot_weights *= ~aiming_board.hits
         shot_weights *= ~aiming_board.misses
 
-        return random.choices(self.possible_shots, weights=shot_weights, k=1)
+        return random.choices(self.possible_shots, weights=shot_weights, k=1)[0]
