@@ -1,13 +1,9 @@
 import AIPlayer
 import Game
 
-player1 = AIPlayer.AIPlayer(Game.BOARD_WIDTH, Game.BOARD_HEIGHT)
-player2 = Game.Player(Game.BOARD_WIDTH, Game.BOARD_HEIGHT)
+while True:
+    player1 = AIPlayer.AIPlayer(Game.BOARD_WIDTH, Game.BOARD_HEIGHT, Game.SHIP_LENGTHS)
+    player2 = AIPlayer.AIPlayer(Game.BOARD_WIDTH, Game.BOARD_HEIGHT, Game.SHIP_LENGTHS)
 
-game = Game.BattleshipGame(player1, player2)
-aiming_board = game.player1_aiming_board
-
-for i in range(1000):
-    player1.take_shot(aiming_board)
-
-print(player1.take_shot(aiming_board))
+    game = Game.BattleshipGame(player1, player2)
+    game.start_game()
