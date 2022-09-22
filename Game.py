@@ -15,6 +15,12 @@ class GameBoard:
         self.hits = np.array([False] * BOARD_WIDTH * BOARD_HEIGHT)
         self.misses = np.array([False] * BOARD_WIDTH * BOARD_HEIGHT)
 
+    def __copy__(self):
+        new_game_board = GameBoard()
+        new_game_board.hits = self.hits.copy()
+        new_game_board.misses = self.misses.copy()
+        return new_game_board
+
 
 class TargetBoard(GameBoard):
 
@@ -92,9 +98,11 @@ class BattleshipGame:
 
         player_one_turn = True
 
+        turns_taken = 0
+
         while player1_hits_remaining > 0 and player2_hits_remaining > 0:
-            # print("P1 HR:", player1_hits_remaining)
             if player_one_turn:
+                turns_taken += 1
                 shot_taken = self.player1.take_shot(self.player1_aiming_board)
                 if self.player2_target_board.check_hit(shot_taken):
                     # on a hit, update the boards and remove one health from the opposing fleet
@@ -118,11 +126,12 @@ class BattleshipGame:
                     self.player1_target_board.misses[shot_taken] = True
 
             player_one_turn = not player_one_turn
+
         if player1_hits_remaining == 0:
             self.player1.game_finish(False)
             self.player2.game_finish(True)
-            print("Player 2 Won!")
+            # print("Player 2 won in " + str(turns_taken) + " rounds")
         else:
             self.player1.game_finish(True)
             self.player2.game_finish(False)
-            print("Player 1 Won!")
+            # print("Player 1 won in " + str(turns_taken) + " rounds")
